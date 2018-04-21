@@ -13,7 +13,7 @@ function love.load()
     cloud.xSpeed = 32
 
     entities.startup()
-    local box = entities.create('box', 128, 128)
+    local zepp = entities.create('zepp', 128, 128)
 end
 
 function love.update(dt)
@@ -28,7 +28,7 @@ function love.draw()
     love.graphics.setColor(191, 255, 255, 255)
     love.graphics.rectangle('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight() / 2)
     love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.draw(img_cloud, cloud.x, cloud.y, 0, cloud.w / img_cloud:getWidth(), cloud.h / img_cloud:getHeight())
+    -- love.graphics.draw(img_cloud, cloud.x, cloud.y, 0, cloud.w / img_cloud:getWidth(), cloud.h / img_cloud:getHeight())
     love.graphics.setColor(127, 159, 0, 255)
     love.graphics.rectangle('fill', 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), love.graphics.getHeight() / 2)
     entities:draw()

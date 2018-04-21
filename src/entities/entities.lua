@@ -7,6 +7,7 @@ local id = 0
 
 function entities.startup() 
     register['box'] = love.filesystem.load(entities.path .. 'box.lua')
+    register['zepp'] = love.filesystem.load(entities.path .. 'zepp.lua')
 end
 
 function entities.derive(name)
@@ -26,6 +27,15 @@ function entities.create(name, x, y)
         return entities.objects[#entities.objects]
     else
         return false
+    end
+end
+
+function entities.destroy(id)
+    if entities.objects[id] then
+        if entities.objects[id].die then
+            entities.objects[id].die()
+        end
+        entities.objects[id] = nil
     end
 end
 
