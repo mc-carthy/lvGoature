@@ -1,6 +1,9 @@
 local cloud = {}
 
 function love.load()
+    img_cloud = love.graphics.newImage('src/assets/img/cloud.png')
+    img_ball = love.graphics.newImage('src/assets/img/ball.png')
+    img_man = love.graphics.newImage('src/assets/img/man.png')
     cloud.x = 128
     cloud.y = 128
     cloud.w = 128
@@ -19,7 +22,7 @@ function love.draw()
     love.graphics.setColor(191, 255, 255, 255)
     love.graphics.rectangle('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight() / 2)
     love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.rectangle('fill', cloud.x, cloud.y, cloud.w, cloud.h)
+    love.graphics.draw(img_cloud, cloud.x, cloud.y, 0, cloud.w / img_cloud:getWidth(), cloud.h / img_cloud:getHeight())
     love.graphics.setColor(127, 159, 0, 255)
     love.graphics.rectangle('fill', 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), love.graphics.getHeight() / 2)
 end
