@@ -21,6 +21,7 @@ function entities.create(name, x, y)
         id = id + 1
         local ent = register[name]()
         ent:load()
+        ent.type = name
         ent:setPos(x, y)
         ent.id = id
         entities.objects[#entities.objects + 1] = ent
@@ -36,6 +37,18 @@ function entities.destroy(id)
             entities.objects[id].die()
         end
         entities.objects[id] = nil
+    end
+end
+
+function entities.shoot(x, y)
+    for k, v in pairs(entities.objects) do
+        if v.die then
+            if v.type == 'zepp' then
+                if pointInBox(x, y, v.x, v.y, v.w, v.h) then
+                    entities.destroy(v.id)
+                end
+            end
+        end
     end
 end
 

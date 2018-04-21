@@ -5,6 +5,8 @@ local zepp = Entities.derive('base')
 function zepp:setPos(x, y)
     self.x = x
     self.y = y
+    self.w = 64
+    self.h = 64
     self.fixedY = y
 end
 
