@@ -14,7 +14,8 @@ function entities.derive(name)
     return love.filesystem.load(entities.path .. name .. '.lua')()
 end
 
-function entities.create(name, x, y)
+function entities.create(name, x, y, background)
+    local background = background or false
     local x = x or 0
     local y = y or 0
     if register[name] then
@@ -24,8 +25,9 @@ function entities.create(name, x, y)
         ent.type = name
         ent:setPos(x, y)
         ent.id = id
-        entities.objects[#entities.objects + 1] = ent
-        return entities.objects[#entities.objects]
+        ent.background = background
+        entities.objects[id] = ent
+        return entities.objects[id]
     else
         return false
     end
@@ -45,7 +47,7 @@ function entities.shoot(x, y)
         if v.die then
             if v.type == 'zepp' then
                 if pointInBox(x, y, v.x, v.y, v.w, v.h) then
-                    entities.destroy(v.id)
+                    v:fall()
                 end
             end
         end
@@ -55,7 +57,6 @@ end
 function entities:update(dt)
     for k, v in pairs(entities.objects) do
         if v.update then
-            print('update')
             v:update(dt)
         end
     end
@@ -63,9 +64,20 @@ end
 
 function entities:draw()
     for k, v in pairs(entities.objects) do
-        if v.draw then
-            print('draw')
-            v:draw()
+        if not v.background then
+            if v.draw then
+                v:draw()
+            end
+        end
+    end
+end
+
+function entities:drawBackground()
+    for k, v in pairs(entities.objects) do
+        if v.background then
+            if v.draw then
+                v:draw()
+            end
         end
     end
 end

@@ -1,4 +1,5 @@
 local Entities = require('src/entities/entities')
+local Explosion = require('src/entities/explosion')
 
 local cloud = {}
 
@@ -13,7 +14,9 @@ function love.load()
     cloud.xSpeed = 32
 
     Entities.startup()
-    local zepp = Entities.create('zepp', 128, 128)
+    for i = 1, 3 do
+        local zepp = Entities.create('zepp', love.math.random(128, 256), 128, true)
+    end
 end
 
 function love.update(dt)
@@ -21,14 +24,17 @@ function love.update(dt)
     if cloud.x > love.graphics.getWidth() then
         cloud.x = -cloud.w
     end
+    updateBackgroundExplosions(dt)
     Entities:update(dt)
 end
 
 function love.draw()
-    love.graphics.setColor(191, 255, 255, 255)
+    love.graphics.setColor(127, 191, 255, 255)
     love.graphics.rectangle('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight() / 2)
     love.graphics.setColor(255, 255, 255, 255)
-    -- love.graphics.draw(img_cloud, cloud.x, cloud.y, 0, cloud.w / img_cloud:getWidth(), cloud.h / img_cloud:getHeight())
+    love.graphics.draw(img_cloud, cloud.x, cloud.y, 0, cloud.w / img_cloud:getWidth(), cloud.h / img_cloud:getHeight())
+    drawBackgroundExplosions()
+    Entities:drawBackground()
     love.graphics.setColor(127, 159, 0, 255)
     love.graphics.rectangle('fill', 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), love.graphics.getHeight() / 2)
     Entities:draw()
