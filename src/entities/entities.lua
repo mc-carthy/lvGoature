@@ -47,7 +47,7 @@ function entities.shoot(x, y)
         if v.die then
             if v.type == 'zepp' then
                 if pointInBox(x, y, v.x, v.y, v.w, v.h) then
-                    v:fall()
+                    v:damage(1)
                 end
             end
         end

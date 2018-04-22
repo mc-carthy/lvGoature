@@ -12,6 +12,7 @@ function love.load()
     cloud.w = 128
     cloud.h = 64
     cloud.xSpeed = 32
+    score = 0
 
     Entities.startup()
     for i = 1, 3 do
@@ -38,6 +39,8 @@ function love.draw()
     love.graphics.setColor(127, 159, 0, 255)
     love.graphics.rectangle('fill', 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), love.graphics.getHeight() / 2)
     Entities:draw()
+    love.graphics.setColor(25, 25, 25, 255)
+    love.graphics.print('Score: ' .. score, 16, 16, 0)
 end
 
 function love.keypressed(key)
@@ -59,4 +62,8 @@ function pointInBox(px, py, x, y, w, h)
         end
     end
     return false
+end
+
+function addScore(v)
+    score = score + v
 end

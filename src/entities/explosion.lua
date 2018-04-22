@@ -12,7 +12,7 @@ function drawBackgroundExplosions()
         love.graphics.setColor(255, 255, 255, 255 * (1 - (v.time / (4 * v.mag))))
         love.graphics.draw(image, v.x - (image:getWidth() / 2) * scale, v.y - (image:getHeight() / 2) * scale, 0, scale, scale)
         love.graphics.setColor(255, 255, 255, 191 * (1 - (v.time / (4 * v.mag))))
-        love.graphics.circle('fill', v.x, v.y, 2048 * (1 - (v.time / (4 * v.mag))), 32)
+        love.graphics.circle('fill', v.x, v.y, 2048 * ((v.time / (4 * v.mag))), 32)
     end
 end
 

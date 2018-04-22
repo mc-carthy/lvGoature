@@ -8,8 +8,6 @@ function zepp:setPos(x, y)
     self.w = 64
     self.h = 64
     self.fixedY = y
-    self.rot = 0
-    self.falling = false
 end
 
 function zepp:load(x, y)
@@ -17,6 +15,12 @@ function zepp:load(x, y)
     self.image = love.graphics.newImage('src/assets/img/fly.png')
     self.birth = love.timer.getTime() + love.math.random(0, 128)
     self.size = love.math.random(4, 6)
+    self.rot = 0
+    self.falling = false
+    self.health = 5
+    self.maxHealth = self.health
+    self.smokes = {}
+    self.smokeImage = love.graphics.newImage('src/assets/img/smoke.png')
 end
 
 function zepp:update(dt)
@@ -36,10 +40,32 @@ function zepp:update(dt)
             Entities.destroy(self.id)
         end
     end
+
+    for i, v in ipairs(self.smokes) do
+        v.time = v.time - dt
+        if v.time <= 0 then
+            table.remove(self.smokes, i)
+        end
+    end
 end
 
 function zepp:fall()
     self.falling = true
+end
+
+function zepp:smoke()
+    table.insert(self.smokes, { time = 3, x = self.x, y = self.y })
+end
+
+function zepp:damage()
+    if self.health > 0 or not self.falling then
+        score = score + 3
+        zepp:smoke()
+        self.health = self.health - 1
+        if self.health <= 0 then
+            self.falling = true
+        end
+    end
 end
 
 function zepp:die()
@@ -51,6 +77,11 @@ function zepp:draw()
     local w, h = self.image:getDimensions()
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(self.image, x, y, self.rot, 64 / w, 64 / h)
+    for k, v in pairs(self.smokes) do
+        local scale = v.time / 3
+        love.graphics.setColor(255, 255, 255, scale * 255)
+        love.graphics.draw(self.smokeImage, v.x, v.y - (1 - scale) * 64, 0, 32 /  w, 32 / h, self.smokeImage:getWidth() / 2, self.smokeImage:getHeight() / 2)
+    end
 end
 
 return zepp
