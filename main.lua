@@ -18,6 +18,7 @@ function love.load()
     for i = 1, 3 do
         local zepp = Entities.create('zepp', love.math.random(128, 256), 128, true)
     end
+    local tank = Entities.create('tank', love.math.random(0, 0), love.graphics.getHeight() / 2 - 30, true)
 end
 
 function love.update(dt)
@@ -66,4 +67,8 @@ end
 
 function addScore(v)
     score = score + v
+end
+
+function takeScore(v)
+    score = score - v
 end

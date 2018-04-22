@@ -8,6 +8,8 @@ local id = 0
 function entities.startup() 
     register['box'] = love.filesystem.load(entities.path .. 'box.lua')
     register['zepp'] = love.filesystem.load(entities.path .. 'zepp.lua')
+    register['tank'] = love.filesystem.load(entities.path .. 'tank.lua')
+    register['bullet'] = love.filesystem.load(entities.path .. 'bullet.lua')
 end
 
 function entities.derive(name)
@@ -47,6 +49,10 @@ function entities.shoot(x, y)
         if v.die then
             if v.type == 'zepp' then
                 if pointInBox(x, y, v.x, v.y, v.w, v.h) then
+                    v:damage(1)
+                end
+            elseif v.type == 'tank' then
+                if pointInBox(x, y, v.x - v.w / 2, v.y - v.h / 2, v.x + v.w / 2, v.y + v.h / 2) then
                     v:damage(1)
                 end
             end
